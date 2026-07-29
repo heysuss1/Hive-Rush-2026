@@ -57,7 +57,7 @@ public class Transfer {
     public Transfer(HardwareMap hwMap){
         intakes = hwMap.get(DcMotorEx.class, "intakes");
         spits = hwMap.get(DcMotorEx.class, "spits");
-        speed = 1;
+
 
         intakes.setDirection(DcMotorSimple.Direction.FORWARD);
         spits.setDirection(DcMotorSimple.Direction.FORWARD);
