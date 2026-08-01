@@ -14,11 +14,15 @@ public class TeleOp extends LinearOpMode {
     public void runOpMode(){
         while (opModeIsActive()){
             robot = new Robot(hardwareMap);
+            robot.driveTrain.setBrakeMode();
             currentGamepad = new Gamepad();
             previousGamepad = new Gamepad();
             previousGamepad.copy(currentGamepad);
             currentGamepad.copy(gamepad1);
             waitForStart();
+
+            robot.driveTrain.drive(gamepad1);
+
             if(currentGamepad.square && !previousGamepad.square){
                 robot.transfer.setSpewMode();
             }
@@ -38,8 +42,20 @@ public class TeleOp extends LinearOpMode {
                 robot.driveTrain.setSpeed(0.25);
             }else {
                 robot.driveTrain.setSpeed(1);
-                //dpad up slide up   down down  lright trigger slow mode
             }
+            if(currentGamepad.cross && !previousGamepad.cross){
+                robot.transfer.setHoldMode();
+            }
+            if(currentGamepad.dpad_up && !previousGamepad.dpad_up){
+                robot.elevator.setUpPosition();
+            }
+            if(currentGamepad.dpad_down && !previousGamepad.dpad_down){
+                robot.elevator.setDownPosition();
+            }
+            robot.elevator.elevatorTask();
+            telemetry.addData("current position", robot.elevator.getCurrentPosition());
+            telemetry.addData("target position", robot.elevator.getTargetPosition());
+            telemetry.update();
 
 
         }

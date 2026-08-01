@@ -18,10 +18,12 @@ public class Elevator {
     double rightGrippyPosition;
     double leftLoosePosition;
     double rightLoosePosition;
+    private final int UPPY_POSITION = 67;
+    private final int DOWNY_POSITION = 6;
 
     Integer targetPosition;
     final int ELEVATOR_TOLERANCE = 50;
-    PidfController elevatorPID;
+    public PidfController elevatorPID;
 
     public Elevator(HardwareMap hwMap){
         misumiLeft = hwMap.get(DcMotorEx.class, "misumiLeft");
@@ -39,9 +41,13 @@ public class Elevator {
 
 
         elevatorPID = new PidfController(kP, kI, kD);
+        elevatorPID.setPidCoefficients(kP, kI, kP);
     }
     public int getTargetPosition(){
         return targetPosition;
+    }
+    public int getCurrentPosition(){
+        return misumiLeft.getCurrentPosition();
     }
     public void setTargetPosition(int targetPosition){
         this.targetPosition = targetPosition;
@@ -65,6 +71,13 @@ public class Elevator {
             misumiRight.setPower(output);
         }
     }
+    public void setUpPosition(){
+       setTargetPosition(UPPY_POSITION);
+    }
+    public void setDownPosition(){
+        setTargetPosition(DOWNY_POSITION);
+    }
+
 
 
 }
