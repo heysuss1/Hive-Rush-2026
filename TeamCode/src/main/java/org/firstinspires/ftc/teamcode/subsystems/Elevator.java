@@ -41,7 +41,7 @@ public class Elevator {
 
 
         elevatorPID = new PidfController(kP, kI, kD);
-        elevatorPID.setPidCoefficients(kP, kI, kP);
+        elevatorPID.setPidCoefficients(kP, kI, kD);
     }
     public int getTargetPosition(){
         return targetPosition;

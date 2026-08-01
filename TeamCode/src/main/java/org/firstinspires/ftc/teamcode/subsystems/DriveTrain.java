@@ -77,8 +77,8 @@ public class DriveTrain {
         setPower(
                 frontLeft * scaleFactor,
                 backLeft * scaleFactor,
-                backRight * scaleFactor,
-                frontRight * scaleFactor
+                frontRight * scaleFactor,
+                backRight * scaleFactor
         );
     }
     public void setBrakeMode(){

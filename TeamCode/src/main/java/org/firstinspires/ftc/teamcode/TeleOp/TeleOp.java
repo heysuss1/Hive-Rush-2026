@@ -12,14 +12,16 @@ public class TeleOp extends LinearOpMode {
     Gamepad currentGamepad;
     Gamepad previousGamepad;
     public void runOpMode(){
+        robot = new Robot(hardwareMap);
+        robot.driveTrain.setBrakeMode();
+        currentGamepad = new Gamepad();
+        previousGamepad = new Gamepad();
+        previousGamepad.copy(currentGamepad);
+        currentGamepad.copy(gamepad1);
+        waitForStart();
+
         while (opModeIsActive()){
-            robot = new Robot(hardwareMap);
-            robot.driveTrain.setBrakeMode();
-            currentGamepad = new Gamepad();
-            previousGamepad = new Gamepad();
-            previousGamepad.copy(currentGamepad);
-            currentGamepad.copy(gamepad1);
-            waitForStart();
+
 
             robot.driveTrain.drive(gamepad1);
 
@@ -53,6 +55,7 @@ public class TeleOp extends LinearOpMode {
                 robot.elevator.setDownPosition();
             }
             robot.elevator.elevatorTask();
+            robot.transfer.intakeUpdate();
             telemetry.addData("current position", robot.elevator.getCurrentPosition());
             telemetry.addData("target position", robot.elevator.getTargetPosition());
             telemetry.update();
