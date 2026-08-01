@@ -19,7 +19,7 @@ public class Elevator {
     double leftLoosePosition;
     double rightLoosePosition;
 
-    int targetPosition;
+    Integer targetPosition;
     final int ELEVATOR_TOLERANCE = 50;
     PidfController elevatorPID;
 
@@ -59,9 +59,11 @@ public class Elevator {
         rightServo.setPosition(rightLoosePosition);
     }
     public void elevatorTask(){
-        double output = elevatorPID.calculate(targetPosition, misumiLeft.getCurrentPosition());
-        misumiLeft.setPower(output);
-        misumiRight.setPower(output);
+        if(targetPosition != null) {
+            double output = elevatorPID.calculate(targetPosition, misumiLeft.getCurrentPosition());
+            misumiLeft.setPower(output);
+            misumiRight.setPower(output);
+        }
     }
 
 
