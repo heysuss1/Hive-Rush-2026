@@ -11,10 +11,14 @@ import org.firstinspires.ftc.teamcode.controllers.PidfController;
 public class Elevator {
     DcMotorEx misumiLeft;
     DcMotorEx misumiRight;
-    Servo hookServo;
+    Servo leftServo;
+    Servo rightServo;
     double kP, kD, kI;
-    double flaccidServoPosition;
-    double erectServoPosition;
+    double leftGrippyPosition;
+    double rightGrippyPosition;
+    double leftLoosePosition;
+    double rightLoosePosition;
+
     int targetPosition;
     final int ELEVATOR_TOLERANCE = 50;
     PidfController elevatorPID;
@@ -22,7 +26,8 @@ public class Elevator {
     public Elevator(HardwareMap hwMap){
         misumiLeft = hwMap.get(DcMotorEx.class, "misumiLeft");
         misumiRight = hwMap.get(DcMotorEx.class, "misumiRight");
-        hookServo = hwMap.get(Servo.class, "hookServo");
+        leftServo = hwMap.get(Servo.class, "leftServo");
+        rightServo = hwMap.get(Servo.class, "rightServo");
 
         misumiLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         misumiLeft.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -44,11 +49,14 @@ public class Elevator {
     public boolean isFinished(){
         return Math.abs(targetPosition - misumiLeft.getCurrentPosition())<= ELEVATOR_TOLERANCE;
     }
-    public void erectServo(){
-        hookServo.setPosition(erectServoPosition);
+    public void grippyServo(){
+        leftServo.setPosition(leftGrippyPosition);
+        rightServo.setPosition(rightGrippyPosition);
     }
-    public void detumesceServo(){
-        hookServo.setPosition(flaccidServoPosition);
+
+    public void looseServo(){
+        leftServo.setPosition(leftLoosePosition);
+        rightServo.setPosition(rightLoosePosition);
     }
     public void elevatorTask(){
         double output = elevatorPID.calculate(targetPosition, misumiLeft.getCurrentPosition());
