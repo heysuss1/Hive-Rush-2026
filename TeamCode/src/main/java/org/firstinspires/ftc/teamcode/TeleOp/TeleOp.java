@@ -54,6 +54,9 @@ public class TeleOp extends LinearOpMode {
             if(currentGamepad.dpad_down && !previousGamepad.dpad_down){
                 robot.elevator.setDownPosition();
             }
+            if(currentGamepad.triangleWasPressed()){
+                robot.transfer.setUnminorMode();
+            }
             robot.elevator.elevatorTask();
             robot.transfer.intakeUpdate();
             telemetry.addData("current position", robot.elevator.getCurrentPosition());
